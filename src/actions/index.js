@@ -6,18 +6,13 @@ const URL ='https://www.googleapis.com/youtube/v3/search';
 export const FETCH_VIDEOS ='FETCH_VIDEOS';
 
 export function fetchVideos(query){
-  console.log("actio creatoor started")
-  const request = axios.get(URL,{params: {
-        'key':KEY,
-        'maxResults': '25',
-        'part': 'snippet',
-        'q': "surfing",
-        'type': ''}
-      }).then(   response => console.log(response) )
-        .catch(  error=> { console.log(error);}  )
-  
-    return {
-      type: FETCH_VIDEOS,
-      payload: request
-    }
+ 
+  const request =axios.get(URL,{params: {
+    'key':KEY, 'maxResults': '25', 'part': 'snippet', 'q': query, 'type': ''}
+  }).then( response => response.data.items)
+
+  return {
+    type: FETCH_VIDEOS,
+    payload:  request
+  }
 } 

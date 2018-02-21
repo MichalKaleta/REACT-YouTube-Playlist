@@ -6,7 +6,7 @@ import {fetchVideos} from '../actions/index';
  class SearchBar extends Component {
   constructor(props){
     super(props)
-    this.state ={ query: "gołe baby"  }  
+    this.state ={ query: "supaplex"  }  
  }
 
   onFormSubmit(event){
@@ -26,8 +26,8 @@ import {fetchVideos} from '../actions/index';
   }
 }
 
-function a(dispatch){
+function mapDispatchToProps(dispatch){
     return bindActionCreators({fetchVideos},dispatch)
 }
 
-export default connect(null,a)(SearchBar)
+export default connect(null,mapDispatchToProps)(SearchBar)

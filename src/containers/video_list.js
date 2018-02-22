@@ -5,10 +5,7 @@ import {playVideo} from '../actions/index';
 
 class VideoList extends Component{
   
-  constructor(props){
-    super(props)
-     
- }
+
 
   componentDidUpdate(){
     console.log("upfate")

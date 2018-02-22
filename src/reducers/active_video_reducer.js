@@ -7,7 +7,8 @@ export default function(state={}, action){
   switch(action.type){
      
     case PLAY_VIDEO:
-      return state.id =action.payload;
+    console.log(state)
+      return action.payload;
 
     default:
       return state;

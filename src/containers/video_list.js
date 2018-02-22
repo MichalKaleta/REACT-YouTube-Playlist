@@ -5,14 +5,12 @@ import {playVideo} from '../actions/index';
 
 class VideoList extends Component{
 
-
   showVideoList(video){
 
-        const id =video.id.videoId;
-        const etag =video.etag
-        const thumb =video.snippet.thumbnails.default.url;
-        console.log(id,etag,thumb)
-       return ( <li key = {etag} 
+    const id =video.id.videoId;
+    const etag =video.etag
+    const thumb =video.snippet.thumbnails.default.url;
+    return ( <li key = {id} 
                       onClick ={this.onVideoClick.bind(this,id) }>
                     <img src={thumb} /> 
                   </li>) 
@@ -30,7 +28,7 @@ class VideoList extends Component{
           <ul>
             { 
               this.props.videos.map( (video) =>{
-              return  this.showVideoList( video)  })
+                return  this.showVideoList( video)  })
             }
           </ul>
       </div>

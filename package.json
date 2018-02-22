@@ -4,7 +4,7 @@
   "description": "Playlist for YouTube",
   "main": "index.js",
   "scripts": {
-    "serve": "webpack-dev-server",
+    "serve": "webpack-dev-server --open",
     "build": "webpack"
   },
   "repository": {

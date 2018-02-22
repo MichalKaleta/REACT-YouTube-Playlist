@@ -12,8 +12,9 @@ import {fetchVideos} from '../actions/index';
   onFormSubmit(event){
     event.preventDefault();
     const query = event.currentTarget.firstChild.value;
-    this.setState({query})
-    this.props.fetchVideos(this.state.query)
+    this.setState({query},()=>{
+      this.props.fetchVideos(this.state.query)
+    })
   }
 
   render (){

@@ -11,7 +11,7 @@ export function fetchVideos(query){
   const request =axios.get(URL,{params: {
     'key':KEY, 'maxResults': '10', 'part': 'snippet', 'q': query, 'type': ''}
   }).then( response => response.data.items)
-  console.log('jestem FETCH')
+  console.log(request)
   return {
     type: FETCH_VIDEOS,
     payload:  request
@@ -19,7 +19,7 @@ export function fetchVideos(query){
 } 
 
 export function playVideo(id){
-  console.log('jestem PLAY')
+
   return {
     type: PLAY_VIDEO,
     payload: id

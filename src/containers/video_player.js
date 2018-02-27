@@ -5,9 +5,9 @@ class VideoPlayer extends Component {
 
   render(){
     return(
-      <iframe width="520" height="315"
-      src={'https://www.youtube.com/embed/'+this.props.videoId}>
-</iframe> 
+        <iframe className='embed-responsive-item'
+                src={'https://www.youtube.com/embed/'+this.props.videoId}>
+        </iframe> 
     )
   }
 }

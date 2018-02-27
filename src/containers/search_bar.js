@@ -3,27 +3,42 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchVideos} from '../actions/index';
 
+var input;
+
  class SearchBar extends Component {
   constructor(props){
     super(props)
     this.state ={ query: "supaplex"  }  
  }
 
+componentDidMount(){
+  input = document.getElementById('search-video');
+  console.log(input)
+}
+
   onFormSubmit(event){
     event.preventDefault();
-    const query = event.currentTarget.firstChild.value;
+    const query = input.value;
     this.setState({query},()=>{
       this.props.fetchVideos(this.state.query)
     })
   }
 
-  render (){
-    return(
-      <form onSubmit={this.onFormSubmit.bind(this)}>
-        <input type="text"/>
-        <button className='btn btn-primary' type='submit'>Search</button>
+  render () {
+    return (
+     
+        <form onSubmit={this.onFormSubmit.bind(this)}>
+          <div className="input-group">
+            <input type="text" id="search-video" className="form-control" />
+            <div className="input-group-append">
+              <button className="btn btn-outline-danger" type="submit">
+                  SEARCH
+              </button>
+          </div>
+        </div>
       </form> 
-    )
+  
+     )
   }
 }
 

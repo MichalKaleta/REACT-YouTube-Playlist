@@ -1,7 +1,8 @@
 import React,{ Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {playVideo} from '../actions/index';
+ 
+import { addToPlaylist } from '../actions/index';
 
 class VideoList extends Component{
 
@@ -10,28 +11,23 @@ class VideoList extends Component{
     const id =video.id.videoId;
     const etag =video.etag
     const thumb =video.snippet.thumbnails.default.url;
-    return ( <li key = {id} 
-                      onClick ={this.onVideoClick.bind(this,id) }>
-                    <img src={thumb} /> 
-                  </li>) 
+    return ( <div className="d-inline"
+                  key = {etag} 
+                  onClick ={ this.onVideoClick.bind( this,{ id, etag, thumb } ) }>
+              <img className='thumbnails'  src={thumb} /> 
+            </div>) 
   }
 
-  onVideoClick(id){
-
-   this.props.playVideo(id)
+  onVideoClick(videoData){
+   this.props.addToPlaylist(videoData)
   }
 
   render(){
     return(
-      <div>
-        <h3> Video List: </h3>
-          <ul>
-            { 
+      <div >{ 
               this.props.videos.map( (video) =>{
-                return  this.showVideoList( video)  })
-            }
-          </ul>
-      </div>
+                return  this.showVideoList( video )  })
+      }</div>
     )
   }
 }
@@ -40,7 +36,7 @@ function mapStateToProps(state){
     return { videos: state.videoList  }
 }
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({playVideo},dispatch)
+    return bindActionCreators({ addToPlaylist },dispatch)
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(VideoList)

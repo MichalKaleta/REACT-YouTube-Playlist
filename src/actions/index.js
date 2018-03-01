@@ -6,6 +6,7 @@ const URL ='https://www.googleapis.com/youtube/v3/search';
 export const FETCH_VIDEOS ='FETCH_VIDEOS';
 export const PLAY_VIDEO ='PLAY_VIDEO'
 export const ADD_TO_PLAYLIST ='ADD_TO_PLAYLIST'
+export const PLAYLIST_TO_PLAYER ='PLAYLIST_TO_PLAYER'
 
 export function fetchVideos(query){
  
@@ -33,4 +34,13 @@ export function addToPlaylist(videoData){
       type: ADD_TO_PLAYLIST,
       payload: videoData
   }
+}
+
+export function playlistToPlayer(playlist){
+
+    return {
+       type: PLAYLIST_TO_PLAYER,
+       payload: playlist
+    }
+
 }

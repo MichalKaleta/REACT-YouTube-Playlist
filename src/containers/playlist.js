@@ -1,31 +1,50 @@
 import React,{ Component } from 'react';
 import {connect} from 'react-redux';
-/* import {bindActionCreators} from 'redux'; */
+import {bindActionCreators} from 'redux';
 
-class Playlist extends Component{
+import {playlistToPlayer} from '../actions/index'
 
-  renderPlaylistItem(item){
-   
-    return (  <li key= {item.etag}
+class Playlist extends Component {
+
+  passIdArray(videos){
+
+      var videosIDs = videos.map(vid=>vid.id)
+    
+       this.props.playlistToPlayer(videosIDs)
+    
+     }
+
+  renderPlaylistItem(video){
+    
+    return (  
+              <li key= {video.etag}
                   className="d-inline" 
-                  videoId= {item.id  }
+                  video_id= {video.id }
                    > 
-                <img src ={item.thumb} />
-              </li>   )
+                <img src ={video.thumb} />
+              </li>  
+            )
   }
 
   render(){
     return(
-      <ul> { 
-          this.props.playlist.map( item => {
-           return  this.renderPlaylistItem(item)
-        })
-        }</ul>
+      <ul> 
+              { this.passIdArray.call(this,this.props.playlist) }
+              { 
+                this.props.playlist.map( video => {
+                return  this.renderPlaylistItem(video)
+              })
+      }</ul>
     )
   }
 }
+
 function mapStateToProps(state){
      return {playlist : state.playlist} ;
 }
 
-export default connect(mapStateToProps)(Playlist)
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({playlistToPlayer},dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Playlist)

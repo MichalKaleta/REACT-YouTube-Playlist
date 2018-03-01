@@ -6,7 +6,7 @@ import VideoPlayer from '../containers/video_player';
 import Playlist from '../containers/playlist';
 
 export default class App extends Component {
-
+ 
   render() {
     return (
         <div className='container-fluid bg-dark'>   

@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import  YouTubeApi from '../components/yt_api'
 
 class VideoPlayer extends Component {
 
   render(){
+
     return(
-        <iframe className='embed-responsive-item'
-                src={'https://www.youtube.com/embed/'+this.props.videoId}>
-        </iframe> 
+        <div>
+            <YouTubeApi/>
+        </div>
     )
   }
 }

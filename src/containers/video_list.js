@@ -12,7 +12,7 @@ class VideoList extends Component{
     const etag =video.etag
     const thumb =video.snippet.thumbnails.default.url;
     return ( <div className="d-inline"
-                  key = {id} 
+                  key = {etag} 
                   onClick ={ this.onVideoClick.bind( this,{ id, etag, thumb } ) }>
               <img className='thumbnails'  src={thumb} /> 
             </div>) 

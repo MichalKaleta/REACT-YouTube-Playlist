@@ -12,7 +12,7 @@ export const REQUEST_NEXT_VIDEO = 'REQUEST_NEXT_VIDEO'
 export function fetchVideos(query){
  
   const request =axios.get(URL,{params: {
-    'key':KEY, 'maxResults': '10', 'part': 'snippet', 'q': query, 'type': ''}
+    'key':KEY, 'maxResults': '10', 'part': 'snippet', 'q': query, 'type': 'video'}
   }).then( response => response.data.items)
   console.log(request)
   return {

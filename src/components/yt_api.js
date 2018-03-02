@@ -49,7 +49,6 @@ class YouTubeApi extends Component {
 
       switch (event.data) {
         case window['YT'].PlayerState.ENDED:
-        console.log(this)
          this.props.requestNextVideo(true)
          this.player.loadVideoById(this.props.videoInQueue)
          this.props.requestNextVideo(false)

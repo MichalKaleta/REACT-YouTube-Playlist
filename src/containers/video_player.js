@@ -16,6 +16,9 @@ class VideoPlayer extends Component {
 
 function mapStateToProps(state){
 
-  return {videoId : state.activeVideo}
+  return {
+          videoId : state.activeVideo
+        }
+
 }
 export default connect(mapStateToProps)(VideoPlayer)

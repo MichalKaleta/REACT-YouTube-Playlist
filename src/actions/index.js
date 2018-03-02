@@ -7,11 +7,12 @@ export const FETCH_VIDEOS ='FETCH_VIDEOS';
 export const PLAY_VIDEO ='PLAY_VIDEO'
 export const ADD_TO_PLAYLIST ='ADD_TO_PLAYLIST'
 export const PLAYLIST_TO_PLAYER ='PLAYLIST_TO_PLAYER'
+export const REQUEST_NEXT_VIDEO = 'REQUEST_NEXT_VIDEO'
 
 export function fetchVideos(query){
  
   const request =axios.get(URL,{params: {
-    'key':KEY, 'maxResults': '10', 'part': 'snippet', 'q': query, 'type': ''}
+    'key':KEY, 'maxResults': '10', 'part': 'snippet', 'q': query, 'type': 'video'}
   }).then( response => response.data.items)
   console.log(request)
   return {
@@ -36,11 +37,19 @@ export function addToPlaylist(videoData){
   }
 }
 
-export function playlistToPlayer(playlist){
-
+export function playlistToPlayer(video){
+  
     return {
        type: PLAYLIST_TO_PLAYER,
-       payload: playlist
+       payload: video
     }
 
+}
+
+export function requestNextVideo(bool){
+
+    return {
+      type: REQUEST_NEXT_VIDEO,
+      payload: bool
+    }
 }

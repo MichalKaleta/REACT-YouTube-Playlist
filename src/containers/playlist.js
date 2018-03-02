@@ -6,12 +6,34 @@ import {playlistToPlayer} from '../actions/index'
 
 class Playlist extends Component {
 
+  checkId(){
+    if(this.props.playlist[0].id){
+      var nextVideo=  this.props.playlist[0];
+      var nextVideoId =nextVideo.id ;
+      return nextVideoId;
+      }
+
+      else{
+        this.props.playlist.shift();
+        this.checkId();
+      } 
+    } 
+ 
+ 
+  componentDidUpdate(){
+ 
+ 
+    var nextVideoId= this.checkId();
+    if(this.props.requestNextVideo){
+        
+        this.props.playlistToPlayer(nextVideoId)
+        this.props.playlist.shift()
+    
+      }
+    }
+  
   passIdArray(videos){
 
-      var videosIDs = videos.map(vid=>vid.id)
-    
-       this.props.playlistToPlayer(videosIDs)
-    
      }
 
   renderPlaylistItem(video){
@@ -29,7 +51,7 @@ class Playlist extends Component {
   render(){
     return(
       <ul> 
-              { this.passIdArray.call(this,this.props.playlist) }
+           {/*    { this.passIdArray.call(this,this.props.playlist) } */}
               { 
                 this.props.playlist.map( video => {
                 return  this.renderPlaylistItem(video)
@@ -40,7 +62,10 @@ class Playlist extends Component {
 }
 
 function mapStateToProps(state){
-     return {playlist : state.playlist} ;
+     return {
+            playlist : state.playlist,
+            requestNextVideo:state.requestNextVideo
+          } ;
 }
 
 function mapDispatchToProps(dispatch){

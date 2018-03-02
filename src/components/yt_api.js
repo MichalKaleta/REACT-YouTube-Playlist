@@ -1,13 +1,10 @@
 import React ,{Component} from 'react';
 import {connect } from 'react-redux';
+import {bindActionCreators} from 'redux'
 
+import {requestNextVideo} from '../actions/index'
 
- class YouTubeApi extends Component {
-
-  componentDidUpdate(){
-   
-  }
-
+class YouTubeApi extends Component {
 
   constructor(props) {
     super(props);
@@ -33,6 +30,8 @@ import {connect } from 'react-redux';
       });
     };
   }
+
+
   render() {
     return ( 
        <div className="embed-responsive embed-responsive-16by9" id="player"></div>
@@ -47,26 +46,13 @@ import {connect } from 'react-redux';
   }
 
   onPlayerStateChange(event) {
-   //console.log(event)
-          switch (event.data) {
-           /*  case window['YT'].PlayerState.PLAYING:
-             // if (this.cleanTime() == 0) {
-               // console.log('started ' + this.cleanTime());
-              //} else {
-               // console.log('playing ' + this.cleanTime())
-             // };
-             // break;
-            case window['YT'].PlayerState.PAUSED:
-             // if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
-                //console.log('paused' + ' @ ' + this.cleanTime());
-              //};
-              //break; */
-            case window['YT'].PlayerState.ENDED:
-               
-                //this.props.videosQueue.shift()
-                this.player.loadPlaylist(this.props.videosQueue)
-                
-          };
+
+      switch (event.data) {
+        case window['YT'].PlayerState.ENDED:
+         this.props.requestNextVideo(true)
+         this.player.loadVideoById(this.props.videoInQueue)
+         this.props.requestNextVideo(false)
+         };
   };
   //utility
   cleanTime() {
@@ -87,7 +73,12 @@ import {connect } from 'react-redux';
 
  function mapStateToProps(state){
 
-  return  {videosQueue:  state.videosQueue}  
+  return  {videoInQueue:  state.videosQueue}  
 }
 
-export default connect(mapStateToProps)(YouTubeApi)
+function mapDispatchToProps(dispatch){
+
+  return   bindActionCreators({requestNextVideo},dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(YouTubeApi)

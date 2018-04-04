@@ -4,27 +4,40 @@ import { bindActionCreators } from 'redux'
 import YouTube from 'react-youtube'
 
 import {requestNextVideo} from '../actions/index'
-
+var player;
 class VideoPlayer extends Component {
+
+constructor(props){
+  super(props)
+  this.props.player;
+}
+
+ componentDidUpdate(){
+  
+    //player.setAttribute('videoId',this.props.videoId)
  
+ }
+
   render() {
     const opts = {
       playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 1
+        autoplay:1
       }
     };
 
     return (
       <YouTube
+        videoId={ this.props.videoId }
         opts={opts}
-        onReady={this.onReady}
+        onReady={this.onReady.bind(this)}
         onEnd={this.onEnd.bind(this)}
       />
     );
   }
 
   onReady(event) {
-    event.target.loadVideoById('90U_SmKyfGI')
+   //this.state.player =event.target
+   //console.log(this.state.player)
   }
 
   onEnd(event){

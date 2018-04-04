@@ -7,43 +7,80 @@ import {removeFromPlaylist} from '../actions/index'
 import {requestNextVideo} from '../actions/index'
 
 class Playlist extends Component {
+  constructor(){
+    super()
+
+    this.state ={ activeVideoIndex: 0  }
+  }
 
   componentDidUpdate(){
    
-    var nextVideoId= this.props.playlist[0].id;
-   
+    if(this.props.playlist.length ===1){
+     
+      var nextVideoId= this.props.playlist[this.state.activeVideoIndex].id;
+      this.props.playlistToPlayer(nextVideoId);
+      ////////////???????????????????????????????/////////////
+    } 
     if(this.props.videoIsRequested===true){
-      console.log(nextVideoId)
+      this.setState({activeVideoIndex : this.state.activeVideoIndex +1 })
+      var nextVideoId= this.props.playlist[this.state.activeVideoIndex].id;
         this.props.playlistToPlayer(nextVideoId);   
-        this.props.removeFromPlaylist();
+       // this.props.removeFromPlaylist();
+       
         this.props.requestNextVideo(false); 
-      
+
     }
   }
 
-  renderPlaylistItem(video){
-    
+ onNextButtonClick(){
+ 
+   this.setState({activeVideoIndex: this.state.activeVideoIndex+1})
+   var nextVideoId= this.props.playlist[this.state.activeVideoIndex+1].id;
+   this.props.playlistToPlayer(nextVideoId);   
+
+ }
+
+  renderPlaylistItem(video,index){
+    var activeClass='' ;
+    if (index === this.state.activeVideoIndex){
+
+        activeClass ='video-active';
+    }else{ activeClass ='' }
+
+
     return (  
               <li key= {video.etag}
-                  className="d-inline" 
+                  className= 'd-inline'  
                   video_id= {video.id }
                    > 
-                <img src ={video.thumb} />
+                <img src ={video.thumb}  className= { activeClass }  />
               </li>  
             )
   }
 
   render(){
     return(
+      <div>
+      <div>
+        <button id ='next' className='btn btn-primary'
+                onClick={ () => this.onNextButtonClick()  }           
+            >NEXT
+        </button>
+      </div>
       <ul> 
               { 
-                this.props.playlist.map( video => {
-                return  this.renderPlaylistItem(video)
+                this.props.playlist.map( (video,index) => {
+                return  this.renderPlaylistItem(video,index)
               })
       }</ul>
+      </div>
     )
   }
 }
+
+
+
+
 
 function mapStateToProps(state){
      return {

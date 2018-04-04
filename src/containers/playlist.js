@@ -3,38 +3,23 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import {playlistToPlayer} from '../actions/index'
+import {removeFromPlaylist} from '../actions/index'
+import {requestNextVideo} from '../actions/index'
 
 class Playlist extends Component {
 
-  checkId(){
-    if(this.props.playlist[0].id){
-      var nextVideo=  this.props.playlist[0];
-      var nextVideoId =nextVideo.id ;
-      return nextVideoId;
-      }
-
-      else{
-        this.props.playlist.shift();
-        this.checkId();
-      } 
-    } 
- 
- 
   componentDidUpdate(){
- 
- 
-    var nextVideoId= this.checkId();
-    if(this.props.requestNextVideo){
-        
-        this.props.playlistToPlayer(nextVideoId)
-        this.props.playlist.shift()
-    
-      }
+   
+    var nextVideoId= this.props.playlist[0].id;
+   
+    if(this.props.videoIsRequested===true){
+      console.log(nextVideoId)
+        this.props.playlistToPlayer(nextVideoId);   
+        this.props.removeFromPlaylist();
+        this.props.requestNextVideo(false); 
+      
     }
-  
-  passIdArray(videos){
-
-     }
+  }
 
   renderPlaylistItem(video){
     
@@ -51,7 +36,6 @@ class Playlist extends Component {
   render(){
     return(
       <ul> 
-           {/*    { this.passIdArray.call(this,this.props.playlist) } */}
               { 
                 this.props.playlist.map( video => {
                 return  this.renderPlaylistItem(video)
@@ -63,13 +47,16 @@ class Playlist extends Component {
 
 function mapStateToProps(state){
      return {
-            playlist : state.playlist,
-            requestNextVideo:state.requestNextVideo
+            playlist :        state.playlist,
+            videoIsRequested: state.requestNextVideo
           } ;
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({playlistToPlayer},dispatch)
+    return bindActionCreators({
+                               playlistToPlayer,
+                               removeFromPlaylist,
+                               requestNextVideo
+                              }, dispatch)
 }
-
 export default connect(mapStateToProps,mapDispatchToProps)(Playlist)

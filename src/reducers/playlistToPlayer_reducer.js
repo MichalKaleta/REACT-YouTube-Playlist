@@ -9,8 +9,7 @@ export default  function(state ="",action){
       case PLAYLIST_TO_PLAYER:
         return action.payload;
 
-    default: 
-    
+    default:     
       return state;
 
     }

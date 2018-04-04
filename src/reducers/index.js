@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   videoList : VideoReducer,
   activeVideo: ActiveVideoReducer,
   playlist: AddToPlaylist,
-  videosQueue: PlaylistToPlayer,
+  nextVideo: PlaylistToPlayer,
   requestNextVideo: RequestNextVideo
 });
 

@@ -8,6 +8,7 @@ export const PLAY_VIDEO ='PLAY_VIDEO'
 export const ADD_TO_PLAYLIST ='ADD_TO_PLAYLIST'
 export const PLAYLIST_TO_PLAYER ='PLAYLIST_TO_PLAYER'
 export const REQUEST_NEXT_VIDEO = 'REQUEST_NEXT_VIDEO'
+export const REMOVE_FROM_PLAYLIST = 'REMOVE_FROM_PLAYLIST'
 
 export function fetchVideos(query){
  
@@ -36,6 +37,13 @@ export function addToPlaylist(videoData){
       payload: videoData
   }
 }
+export function removeFromPlaylist(){
+  
+  return {
+      type: REMOVE_FROM_PLAYLIST,
+      payload: null
+  }
+}
 
 export function playlistToPlayer(video){
   
@@ -43,7 +51,6 @@ export function playlistToPlayer(video){
        type: PLAYLIST_TO_PLAYER,
        payload: video
     }
-
 }
 
 export function requestNextVideo(bool){

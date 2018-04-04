@@ -11,9 +11,10 @@ export default function(state =[] ,action ){
       return state.concat(action.payload);
 
     case REMOVE_FROM_PLAYLIST:
-      return state.slice(1,state.length+1)
+      console.log(state.slice(action.payload,0));
+      return state.slice(0,action.payload).concat(state.slice(action.payload+1,state.length))
 
-    default:
+    default:  
       return state;
   }
 

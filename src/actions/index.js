@@ -13,7 +13,7 @@ export const REMOVE_FROM_PLAYLIST = 'REMOVE_FROM_PLAYLIST'
 export function fetchVideos(query){
  
   const request =axios.get(URL,{params: {
-    'key':KEY, 'maxResults': '10', 'part': 'snippet', 'q': query, 'type': 'video'}
+    'key':KEY, 'maxResults': '12', 'part': 'snippet', 'q': query, 'type': 'video'}
   }).then( response => response.data.items)
   console.log(request)
   return {
@@ -37,11 +37,11 @@ export function addToPlaylist(videoData){
       payload: videoData
   }
 }
-export function removeFromPlaylist(){
-  
+export function removeFromPlaylist(index){
+ 
   return {
-      type: REMOVE_FROM_PLAYLIST,
-      payload: null
+      type: REMOVE_FROM_PLAYLIST,     
+      payload: index
   }
 }
 

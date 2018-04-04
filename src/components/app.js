@@ -12,18 +12,19 @@ export default class App extends Component {
     return (
         <div className='container-fluid bg-dark'>   
           <div className="row">
-            <div className="col-8 embed-responsive embed-responsive-16by9">
+            <div className="col-md-8 embed-responsive embed-responsive-16by9">
               <VideoPlayer/>
             </div>          
-            <div className="col-4">
-             <SearchBar/>
-             <VideoList/>
+            <div className="col-md-4">
+                <SearchBar/>
+                <VideoList/>
+              </div>
             </div>
-           </div>
           <div className="row">
-           <Playlist/>
+            <div className="col-md-8">
+               <Playlist/>
+            </div>
           </div>
-         
         </div>
 
     );

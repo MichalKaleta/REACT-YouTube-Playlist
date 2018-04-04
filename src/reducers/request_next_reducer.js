@@ -7,7 +7,7 @@ export default  function(state = false,action){
     switch(action.type){
    
       case REQUEST_NEXT_VIDEO:
-         console.log(action.payload)
+        
         return action.payload;
 
     default: 

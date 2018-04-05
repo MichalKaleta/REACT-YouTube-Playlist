@@ -4,11 +4,12 @@ const KEY = 'AIzaSyD9d25lAYVOHhUtkUV5sKfTEmu25YQCRzo';
 const URL ='https://www.googleapis.com/youtube/v3/search';
 
 export const FETCH_VIDEOS ='FETCH_VIDEOS';
-export const PLAY_VIDEO ='PLAY_VIDEO'
-export const ADD_TO_PLAYLIST ='ADD_TO_PLAYLIST'
-export const PLAYLIST_TO_PLAYER ='PLAYLIST_TO_PLAYER'
-export const REQUEST_NEXT_VIDEO = 'REQUEST_NEXT_VIDEO'
-export const REMOVE_FROM_PLAYLIST = 'REMOVE_FROM_PLAYLIST'
+export const PLAY_VIDEO ='PLAY_VIDEO';
+export const ADD_TO_PLAYLIST ='ADD_TO_PLAYLIST';
+export const PLAYLIST_TO_PLAYER ='PLAYLIST_TO_PLAYER';
+export const REQUEST_NEXT_VIDEO = 'REQUEST_NEXT_VIDEO';
+export const REMOVE_FROM_PLAYLIST = 'REMOVE_FROM_PLAYLIST';
+export const REARANGE_PLAYLIST = 'REARANGE_PLAYLIST';
 
 export function fetchVideos(query){
  
@@ -44,6 +45,17 @@ export function removeFromPlaylist(index){
       payload: index
   }
 }
+export function rearangePlaylist(dragedIndex,dropIndex){
+ 
+  return {
+      type: REARANGE_PLAYLIST,     
+      payload: {  
+                  dragedIndex: dragedIndex ,
+                  dropIndex: dropIndex  
+                }
+  }
+}
+
 
 export function playlistToPlayer(video){
   

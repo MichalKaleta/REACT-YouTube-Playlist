@@ -5,6 +5,7 @@ li {
   position: relative;
   margin: 2px 2px;
   border: 2px solid #555;
+  transition: 0.5s all;
 
 }
 

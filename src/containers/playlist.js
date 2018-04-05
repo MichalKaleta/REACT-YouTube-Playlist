@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import {playlistToPlayer} from '../actions/index'
 import {removeFromPlaylist} from '../actions/index'
 import {requestNextVideo} from '../actions/index'
+import {rearangePlaylist} from '../actions/index'
 
 class Playlist extends Component {
   constructor(){
@@ -32,7 +33,6 @@ pushVideo(index){
   var nextVideoId= this.props.playlist[index].id;
   this.setState({activeVideoIndex: index})
   this.props.playlistToPlayer(nextVideoId);   
-
 }
 
  onButtonClick(direction){
@@ -47,9 +47,25 @@ onPlaylistItemClick(index){
  this.pushVideo(index);
 }
 
+onPlaylistItemDrag(ev,index){
+  console.log(index)
+  ev.dataTransfer.setData("text",index);
+  
+ }
+
+onPlaylistItemDrop(ev,index){
+  ev.preventDefault()
+    
+    var  dragedIndex = ev.dataTransfer.getData('text')
+         dragedIndex =parseInt(dragedIndex)
+    this.props.rearangePlaylist(dragedIndex,index)
+  
+}
+
 onRemoveClick(index){
   this.props.removeFromPlaylist(index)
 }
+
 
   renderPlaylistItem(video,index){
     
@@ -57,16 +73,19 @@ onRemoveClick(index){
 
     return (  
                <li key= {index}
+                  draggable='true'
                   id='playlist-list-item'
                   className= {'d-inline-block ' + activeClass }  
                   video_id= {video.id}
                   onClick={ ()=> this.onPlaylistItemClick(index) }
+                  onDragStart={ (ev)=> this.onPlaylistItemDrag(ev,index) }
+                  onDragOver={(ev)=>{ev.preventDefault()}}
+                  onDrop ={(ev)=>{ ev.preventDefault();
+                                  this.onPlaylistItemDrop(ev,index)}}
                    > 
                    <a className="btn btn-danger delete-button"
-                        onClick={  
-                                  (ev)=>{ ev.stopPropagation();
-                                        
-                                         this.onRemoveClick(index)  
+                        onClick={   (ev)=>{ ev.stopPropagation();
+                                            this.onRemoveClick(index)  
                                 } }>
                      <i className="fa fa-times" ></i>
                   </a>
@@ -117,6 +136,7 @@ function mapDispatchToProps(dispatch){
     return bindActionCreators({
                                playlistToPlayer,
                                removeFromPlaylist,
+                               rearangePlaylist,
                                requestNextVideo
                               }, dispatch)
 }

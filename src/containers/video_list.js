@@ -10,12 +10,24 @@ class VideoList extends Component{
 
     const id =video.id.videoId;
     const etag =video.etag
-    const thumb =video.snippet.thumbnails.default.url;
-    return ( <div className="d-inline"
+    const thumb =video.snippet.thumbnails.medium.url;
+    const {channelTitle, title} = video.snippet	;
+    
+    return (
+          <li className="searched-list-item"
                   key = {etag} 
                   onClick ={ this.onVideoClick.bind( this,{ id, etag, thumb } ) }>
-              <img className='thumbnails'  src={thumb} /> 
-            </div>) 
+            <div className="row">
+              <div className="col-sm-6">
+                <img className='thumbnails'  src={thumb} /> 
+              </div>  
+              <div className="col-sm-6 description">
+                  <div className= 'video-title' > {title} </div>
+                  <div>  {channelTitle}</div>
+              </div>
+            </div>
+          </li>
+          ) 
   }
 
   onVideoClick(videoData){
@@ -24,10 +36,10 @@ class VideoList extends Component{
 
   render(){
     return(
-      <div >{ 
+        <ul className='searched-list'>{
               this.props.videos.map( (video) =>{
                 return  this.showVideoList( video )  })
-      }</div>
+        }</ul>
     )
   }
 }

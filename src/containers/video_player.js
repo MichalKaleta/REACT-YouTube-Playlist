@@ -26,12 +26,14 @@ constructor(props){
     };
 
     return (
-      <YouTube
-        videoId={ this.props.videoId }
-        opts={opts}
-        onReady={this.onReady.bind(this)}
-        onEnd={this.onEnd.bind(this)}
-      />
+      <div className="embed-responsive embed-responsive-16by9">
+        <YouTube
+          videoId={ this.props.videoId }
+          opts={opts}
+          onReady={this.onReady.bind(this)}
+          onEnd={this.onEnd.bind(this)}
+        />
+      </div>
     );
   }
 

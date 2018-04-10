@@ -12,18 +12,19 @@ export default function(state =[] ,action ){
       return state.concat(action.payload);
 
     case REMOVE_FROM_PLAYLIST:
-      return state.slice(  0,action.payload  ).concat(  state.slice(action.payload+1,state.length)  )
+  
+      return [...state.slice(  0,action.payload  ), ...state.slice(action.payload+1,state.length)]
+  
+      case REARANGE_PLAYLIST:
+        var dragIdx =action.payload.dragedIndex;
+        var dropIdx =action.payload.dropIndex;
+       if(dragIdx <= dropIdx  ){
+        return  [ ...state.slice(0,dragIdx), ...state.slice(dragIdx+1,dropIdx+1), state[dragIdx] , ...state.slice(dropIdx+1,state.length+1) ]
+       }else{
+         return [ ...state.slice(0,dropIdx), state[dragIdx] , ...state.slice(dropIdx,dragIdx),  ...state.slice(dragIdx+1,state.length+1) ]
+       }
 
-    case REARANGE_PLAYLIST:
-      var  dragIdx =action.payload.dragedIndex;
-      var  dropIdx =action.payload.dropIndex;
-      console.log(dragIdx,dropIdx)
-      var newPlay =state.slice(0,dragIdx)
-                  .concat(  state.slice(dragIdx+1,dropIdx)  )
-                  .concat(  state[dragIdx]  )
-                  .concat(  state.slice(dropIdx,state.length+1) ) 
-      console.log(newPlay)
-      return  newPlay
+      
 
     default:  
       return state;

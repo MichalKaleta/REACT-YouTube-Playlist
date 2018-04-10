@@ -1,37 +1,98 @@
+body {
+  background-color: #111;
+}
 
+.searched-list{
 
-li {
+  position: relative;
+  padding: 0px;
+  max-height: 100%;
  
+ /*  overflow-y: scroll;
+  overflow-x: visible; */
+}
+.searched-list-item{
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+}
+.searched-list-item img{
+
+  width: 100%;
+}
+.searched-list-item .description {
+
+  font-size: 0.85em;
+  padding: 0;
+ }
+.searched-list-item .video-title {
+
+  color: #f6f6f6;
+ }
+.playlist-container ul{
+  
+  display: flex;
+  flex-wrap:  wrap ;
+}
+.playlist-item {
+
   position: relative;
   margin: 2px 2px;
   border: 2px solid #555;
-  transition: 0.5s all;
+  
+  background-color: #111;
+  height: 114px;
+  padding: 17px 0;
+  width:150px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: 0.2s all;
+  transform: translateX(0px);
+}
+.slide-left{
 
+  transform : translateX(-50px);
 }
 
-.video-active {
+.slide-left:after{
+  content: '';
+ 
+  position: absolute;
+  top:0;
+  right:-100px;
+  height: 100%;
+  width: 100px;
+}
+.slide-right{
+
+  transform : translateX(50px);
+}
+.playlist-item.video-active  {
 
   border: 2px solid #3e3;
 }
 
-li:hover{
+.playlist-item:hover{
 
   border: 2px solid #9f9;
-  cursor: pointer;
+  cursor: move;
 }
 
-li:hover .delete-button{
+.playlist-item:hover .delete-button{
 
   display: flex;
 }
 
 .delete-button {
-
+  opacity:0.95;
   padding: 5px;
   display: none; 
   position: absolute;
-  top:-10px;
-  left: -10px;
+  top:-7px;
+  left: -7px;
   height: 25px;
   width: 25px;
   border-radius: 0; 

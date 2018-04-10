@@ -10,22 +10,26 @@ export default class App extends Component {
   render() {
    
     return (
-        <div className='container-fluid bg-dark'>   
-          <div className="row">
-            <div className="col-md-8 embed-responsive embed-responsive-16by9">
-              <VideoPlayer/>
-            </div>          
-            <div className="col-md-4">
-                <SearchBar/>
-                <VideoList/>
+        <div className='row'>   
+          <div className="col-md-8">
+            <div className="row">
+              <div className="col">
+                <VideoPlayer/>
               </div>
             </div>
-          <div className="row">
-            <div className="col-md-8">
-               <Playlist/>
+            <div className="row">
+              <div className="col">
+                <Playlist/>
+              </div>
             </div>
+          </div>          
+          <div className="col-md-4">
+            <SearchBar/>
+            <VideoList/>
           </div>
+      
         </div>
+        
 
     );
   }

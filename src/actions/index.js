@@ -16,7 +16,7 @@ export function fetchVideos(query){
   const request =axios.get(URL,{params: {
     'key':KEY, 'maxResults': '12', 'part': 'snippet', 'q': query, 'type': 'video'}
   }).then( response => response.data.items)
-  console.log(request)
+ 
   return {
     type: FETCH_VIDEOS,
     payload:  request
@@ -55,7 +55,6 @@ export function rearangePlaylist(dragedIndex,dropIndex){
                 }
   }
 }
-
 
 export function playlistToPlayer(video){
   

@@ -44,11 +44,13 @@ constructor(props){
 
   onEnd(event){
     this.props.requestNextVideo(true)
-    event.target.loadVideoById(this.props.videoId)
-   
+    if (this.props.videoId =='stop'){
+      event.target.loadVideoById('stop')
+    }else{
+    event.target.loadVideoById(this.props.videoId)  
+    }
   }
 }
-
 
 function mapStateToProps(state){
   return { videoId : state.nextVideo}
@@ -57,9 +59,6 @@ function mapDispatchTo(dispatch){
   return bindActionCreators({requestNextVideo},dispatch)
 }
 export default connect(mapStateToProps,mapDispatchTo)(VideoPlayer)
-
-
-
 
 
 /* <YouTube

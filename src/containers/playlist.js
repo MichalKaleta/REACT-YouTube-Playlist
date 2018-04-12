@@ -6,13 +6,16 @@ import {playlistToPlayer} from '../actions/index'
 import {removeFromPlaylist} from '../actions/index'
 import {requestNextVideo} from '../actions/index'
 import {rearangePlaylist} from '../actions/index'
+import {dragAnimations} from '../components/dragAnimations'
 
 class Playlist extends Component {
   constructor(){
     super()
-    this.state ={ activeVideoIndex: 0  }
+    this.state ={ 
+                  activeVideoIndex: 0,
+                  draggedIndex: 0
+                }
   }
-
   componentDidUpdate(){
    
     if(this.props.playlist.length ===1){
@@ -29,9 +32,14 @@ class Playlist extends Component {
   }
   pushVideo(index){
 
-    var nextVideoId= this.props.playlist[index].id;
-    this.setState({activeVideoIndex: index})
-    this.props.playlistToPlayer(nextVideoId);   
+    if(index< this.props.playlist.length){
+
+      var nextVideoId= this.props.playlist[index].id;
+      this.setState({activeVideoIndex: index})
+      this.props.playlistToPlayer(nextVideoId);   
+    }else{
+      this.props.playlistToPlayer('stop');
+    }
   }
 
   onButtonClick(direction){
@@ -49,69 +57,63 @@ class Playlist extends Component {
   onPlaylistItemDrag(ev,index){
 
     ev.currentTarget.classList.add('dragged');
-    ev.dataTransfer.setData("text",index);
+    this.setState({draggedIndex: index})
+    ev.dataTransfer.setData("text/plain",index);
   }
 
-  onItemDragEneter(ev){
+  onItemDragEneter(ev,index,len){
+     
+    ev.stopPropagation();
+    const itemOver = ev.currentTarget;
+    const dragedIndex = ev.dataTransfer.getData('text/plain')
+    dragAnimations('enter',1000,itemOver,this.state.draggedIndex ,index,len,this.state.activeVideoIndex)
+  }
+
+  onItemDragLeave(ev,index,len){
 
     ev.stopPropagation()
     const itemOver = ev.currentTarget;
-    if(!ev.currentTarget.classList.contains('dragged')){    
-       
-      itemOver.nextSibling.classList.add('slide-right');
-      itemOver.classList.add('slide-left');
-   
-    }
-  }
-
-  onItemDragLeave(ev){
-
-    ev.stopPropagation()
-    const itemLeaved = ev.currentTarget;
-    if(!ev.currentTarget.classList.contains('dragged')){
-      
-      itemLeaved.nextSibling.classList.remove('slide-right');
-      itemLeaved.classList.remove('slide-left');
-    }
+    const dragedIndex = ev.dataTransfer.getData('text/plain');
+    dragAnimations('leave',0,itemOver,this.state.draggedIndex ,index,len)
   }
 
   onItemDragEnd(ev){
- 
-    ev.currentTarget.classList.remove('dragged');
+    
+    ev.currentTarget.classList.remove('dragged')   
   }
 
-  onPlaylistItemDrop(ev,index){
+  onPlaylistItemDrop(ev,index,len){
+
     ev.preventDefault()
+    const dragedIndex = ev.dataTransfer.getData('text');
     const itemOver = ev.currentTarget;
-       itemOver.nextSibling.classList.remove('slide-right')
-      itemOver.classList.remove('slide-left');
-      var dragedIndex = parseInt(ev.dataTransfer.getData('text'))
-      this.props.rearangePlaylist(dragedIndex,index) 
+    const step= dragAnimations('end',0,itemOver,this.state.draggedIndex ,index,len,this.state.activeVideoIndex);
+    this.setState({activeVideoIndex: this.state.activeVideoIndex+step});
+    this.props.rearangePlaylist(parseInt(dragedIndex,10),index) ; 
   }
 
   onRemoveClick(ev,index){
-    ev.stopPropagation();
 
+    ev.stopPropagation();
     this.props.removeFromPlaylist(index)
   }
 
-  renderPlaylistItem(video,index){
+  renderPlaylistItem(video,index,len){
     
-    var activeClass= index === this.state.activeVideoIndex ? 'video-active' : '';
-
+    const activeClass= index === this.state.activeVideoIndex ? 'video-active' : '';
     return (  
       <li key= {index}
         style= { { backgroundImage: 'url(' + video.thumb + ')' }}
-        draggable='true'
+        draggable= 'true'
         className= {'d-inline-block playlist-item ' + activeClass  }  
         video_id= {video.id}
-        onClick={ ()=> this.onPlaylistItemClick(index) }
-        onDragStart={ ev=> this.onPlaylistItemDrag(ev,index) }
-        onDragOver={ ev=>{ ev.preventDefault(ev)} }
-        onDragEnter ={ ev=>{this.onItemDragEneter(ev)}}
-        onDragLeave ={ ev=>{this.onItemDragLeave(ev)}}
-        onDrop ={ ev=>{ this.onPlaylistItemDrop(ev,index)}}
-        onDragEnd={ ev => {this.onItemDragEnd(ev)} }
+        onClick=     { ()=> this.onPlaylistItemClick(index) }
+        onDragStart= { ev=> this.onPlaylistItemDrag(ev,index) }
+        onDragOver=  { ev=>{ ev.preventDefault(ev)} }
+        onDragEnter ={ ev=>{this.onItemDragEneter(ev,index,len)}}
+        onDragLeave ={ ev=>{this.onItemDragLeave(ev,index,len)}}
+        onDrop =     { ev=>{ this.onPlaylistItemDrop(ev,index,len)}}
+        onDragEnd=   { ev => {this.onItemDragEnd(ev)} }
           > 
           <button className="btn btn-danger delete-button"
               onClick={  ev=>{ this.onRemoveClick(ev,index)  } }>
@@ -123,34 +125,20 @@ class Playlist extends Component {
   render(){
     return(
         <div className='col playlist-container'>
-        {
-           /*  <div className='row'>
-          <div className="col">
-            <button id ='button-prev' className='btn btn-default float-left'
-                  onClick={ () => this.onButtonClick('prev')  }           
-                >PREV
-            </button>
-            <button id ='button-next' className='btn btn-default float-right'
-                    onClick={ () => this.onButtonClick('next')  }           
-                >NEXT
-            </button>
+          <div className='page-header'>
+            <h1>Playlist</h1>
           </div>
-        </div> */
-        }
-        <ul> { 
-                  this.props.playlist.map( (video,index) => {
-                  return  this.renderPlaylistItem(video,index)
-                })
+        <ul> 
+             {  
+              this.props.playlist.map( (video,index,pl) => {
+                return this.renderPlaylistItem(video,index,pl.length)
+              })
         }</ul>
         </div>
    
     )
   }
 }
-
-
-
-
 
 function mapStateToProps(state){
      return {

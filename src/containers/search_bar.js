@@ -26,12 +26,11 @@ componentDidMount(){
 
   render () {
     return (
-     
         <form onSubmit={this.onFormSubmit.bind(this)}>
           <div className="input-group">
-            <input type="text" id="search-video" className="form-control" />
+            <input type="text" id="search-video" className="form-control rounded-0" />
             <div className="input-group-append">
-              <button className="btn btn-outline-danger" type="submit">
+              <button className="btn btn-outline-danger rounded-0" type="submit">
                   SEARCH
               </button>
           </div>

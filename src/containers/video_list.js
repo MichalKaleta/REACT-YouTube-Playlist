@@ -11,22 +11,25 @@ class VideoList extends Component{
     const id =video.id.videoId;
     const etag =video.etag
     const thumb =video.snippet.thumbnails.medium.url;
-    const {channelTitle, title} = video.snippet	;
-    
+    var {channelTitle, title} = video.snippet	;
+         
+    title =title.length > 90 ? title.substr(0,90).concat('. . .') : title
+
     return (
-          <li className="searched-list-item"
-                  key = {etag} 
-                  onClick ={ this.onVideoClick.bind( this,{ id, etag, thumb } ) }>
-            <div className="row">
-              <div className="col-sm-6">
-                <img className='thumbnails'  src={thumb} /> 
-              </div>  
-              <div className="col-sm-6 description">
-                  <div className= 'video-title' > {title} </div>
-                  <div>  {channelTitle}</div>
-              </div>
-            </div>
-          </li>
+      <li className="searched-list-item"
+              key = {etag} 
+              onClick ={ this.onVideoClick.bind( this,{ id, etag, thumb } ) }>
+        <div className="row">
+          <div className="col-sm-6">
+             <i className="fa fa-plus-square" ></i>
+            <img className='thumbnails'  src={thumb} /> 
+          </div>  
+          <div className="col-sm-6 description">
+              <div className= 'video-title' > {title} </div>
+              <div className= 'channel-title'>  {channelTitle}</div>
+          </div>
+        </div>
+      </li>
           ) 
   }
 

@@ -1,14 +1,16 @@
 body {
   background-color: #111;
 }
+li{
+  cursor: pointer;
+}
 
 .searched-list{
 
   position: relative;
   padding: 0px;
   max-height: 100%;
- 
- /*  overflow-y: scroll;
+  /*  overflow-y: scroll;
   overflow-x: visible; */
 }
 .searched-list-item{
@@ -17,19 +19,47 @@ body {
   display: flex;
   justify-content: center;
   padding: 5px 0;
+  color:transparent;
 }
+.searched-list-item .col-sm-6:first-of-type{
+
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.searched-list-item i{
+
+  position: absolute;
+  font-size: 4em; 
+}
+.searched-list-item:hover{
+  background-color: #222;
+  opacity: 1;
+}
+.searched-list-item:hover i{
+ 
+  color: lightgreen;
+  opacity: 1  ;
+}
+
+
 .searched-list-item img{
 
   width: 100%;
 }
 .searched-list-item .description {
 
-  font-size: 0.85em;
-  padding: 0;
+  padding: 2px;
  }
-.searched-list-item .video-title {
-
+.description .video-title {
+  font-size: 0.95em;
   color: #f6f6f6;
+ }
+.description .channel-title {
+  font-size: 0.85em;
+  color: #999;
  }
 .playlist-container ul{
 
@@ -39,13 +69,15 @@ body {
   flex-wrap:  wrap ;
   padding:0;
 }
-.playlist-item {
+
+
+li.playlist-item {
   
   position: relative;
   display: inline-block;
   margin: 2px 2px;
   border: 2px solid #555;
-  background-color: #111;
+  background-color: #000;
   height: 114px;
   padding: 17px 0;
   width:150px;
@@ -61,9 +93,14 @@ ul li.playlist-item.dragged{
  
   display: none;
 }
-.slide-left{
+li.playlist-item.slide-left{
 
-  transform : translateX(-50px);
+  transform : translateX(-50px) scale(0.9);
+}
+
+li.playlist-item.slide-right{
+
+  transform : translateX(50px) scale(0.9);
 }
 
  .slide-left:after{
@@ -72,13 +109,9 @@ ul li.playlist-item.dragged{
   top:0;
   right:-100px;
   height: 100%;
-  width: 105px;
- /*  background-color: red; */
+  width: 100px;
+ /*  background-color: red; */ 
 } 
-.slide-right{
-
-  transform : translateX(50px);
-}
 
 .slide-right:after{
   content: '';
@@ -86,8 +119,8 @@ ul li.playlist-item.dragged{
   top:0;
   left:-100px;
   height: 100%;
-  width: 105px;
- /*  background-color: green; */
+  width: 100px;
+ /*  background-color: green;  */
 } 
 
 .playlist-item.video-active  {
@@ -98,7 +131,6 @@ ul li.playlist-item.dragged{
 .playlist-item:hover{
 
   border: 2px solid #9f9;
-  cursor: pointer;
 }
 
 .playlist-item:hover .delete-button{

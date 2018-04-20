@@ -18,7 +18,7 @@ This app make it easy to add, rearange, remove and of course watch videos from t
 </ul>
 <h3>Instructions:</h3>
 <ul>  
-  <li><code> npm run serve </code> to start app on localserver on port 8080</li>
+  <li><code> npm run serve</code> to start app on localserver on port 8080</li>
   <li><span class='green'>Search</span> for YT videos form searchbar</li>
   <li> <span class='green'>click</span> videos from current search result to <span class='green'>add</span> to playlist</li>
   <li>If You wish search another phrase and add those videos too  </li>

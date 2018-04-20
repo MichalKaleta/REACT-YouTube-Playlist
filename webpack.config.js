@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports= {
+  
   entry: [
     "./style/style.css",
     "./src/index.js"
@@ -25,7 +26,7 @@ module.exports= {
   module: {
     rules: [
       {
-        test: /.jsx?$/,
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         include: /src/,
         query: {
@@ -35,13 +36,13 @@ module.exports= {
       {
         test: /\.css$/,
         include: /style/,
-        loaders: ["style-loader","css-loader"]
+        loaders: ["style-loader", "css-loader"]
       }, 
       { 
         test: /\.html$/,
+        exclude: /node_modules/,
         loader: 'html-loader' 
       }
     ] 
-
   }
 }

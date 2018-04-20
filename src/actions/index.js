@@ -58,7 +58,7 @@ export function rearangePlaylist(dragedIndex,dropIndex){
 
 export function playlistToPlayer(video){
   
-    return {
+    return {   
        type: PLAYLIST_TO_PLAYER,
        payload: video
     }

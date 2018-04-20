@@ -1,6 +1,7 @@
 import React,{ Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import {playlistToPlayer} from '../actions/index'
 import {removeFromPlaylist} from '../actions/index'
@@ -17,7 +18,7 @@ class Playlist extends Component {
                 }
   }
   componentDidUpdate(){
-   
+
     if(this.props.playlist.length ===1){
      
       var nextVideoId= this.props.playlist[this.state.activeVideoIndex].id;
@@ -25,7 +26,7 @@ class Playlist extends Component {
 
     } 
     if(this.props.videoIsRequested===true){
-
+        
         this.pushVideo(this.state.activeVideoIndex+1)
         this.props.requestNextVideo(false); 
     }
@@ -33,24 +34,25 @@ class Playlist extends Component {
   pushVideo(index){
 
     if(index< this.props.playlist.length){
-
+      
       var nextVideoId= this.props.playlist[index].id;
-      this.setState({activeVideoIndex: index})
-      this.props.playlistToPlayer(nextVideoId);   
+      this.setState({activeVideoIndex: index}) 
+      this.props.playlistToPlayer(nextVideoId);  
+    
     }else{
       this.props.playlistToPlayer('stop');
     }
   }
 
-  onButtonClick(direction){
+   onButtonClick(direction){
     
     var step = direction==='next'? 1 : -1; 
     var index = this.state.activeVideoIndex + step ;
     this.pushVideo(index);
   }
-
+ 
   onPlaylistItemClick(index){
-
+   
     this.pushVideo(index);
   }
 
@@ -125,15 +127,18 @@ class Playlist extends Component {
   render(){
     return(
         <div className='col playlist-container'>
-          <div className='page-header'>
-            <h1>Playlist</h1>
-          </div>
-        <ul> 
-             {  
-              this.props.playlist.map( (video,index,pl) => {
-                return this.renderPlaylistItem(video,index,pl.length)
-              })
-        }</ul>
+          <ul>   
+             <ReactCSSTransitionGroup
+                transitionName="slide"
+                transitionEnterTimeout={0}
+                transitionLeaveTimeout={0}>
+                { 
+                  this.props.playlist.map( (video,index,pl) => {
+                    return this.renderPlaylistItem(video,index,pl.length)
+                  })
+                }
+            </ReactCSSTransitionGroup>
+          </ul>
         </div>
    
     )

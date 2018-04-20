@@ -27,6 +27,7 @@ constructor(props){
 
     return (
       <div className="embed-responsive embed-responsive-16by9">
+        {console.log(this.props.videoId)}
         <YouTube
           videoId={ this.props.videoId }
           opts={opts}

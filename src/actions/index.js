@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const KEY = 'AIzaSyD9d25lAYVOHhUtkUV5sKfTEmu25YQCRzo';
+const KEY = ' API KEY HERE';
 const URL ='https://www.googleapis.com/youtube/v3/search';
 
 export const FETCH_VIDEOS ='FETCH_VIDEOS';
